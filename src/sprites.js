@@ -442,6 +442,15 @@ const ART = {
     'oOoOoOoOoOoo',
     'oooooooooooo',
   ],
+  dog: [
+    '........kk.',
+    '.......kkkk',
+    'k......kkkw',
+    '.kOOOOOOkk.',
+    '.OOOOOOOO..',
+    '.OO....OO..',
+    '.kk....kk..',
+  ],
   taxiTop: [
     '..kkkkkk..',
     '.kyyyyyyk.',

@@ -9,7 +9,7 @@ export const EPISODES = [
   { id: 6, icon: 'zetor_0', scene: 'Episode6' },
   { id: 7, icon: 'sausage', scene: 'Episode7' },
   { id: 8, icon: 'coffee', scene: 'Episode8' },
-  { id: 9, icon: 'house', ending: true },
+  { id: 9, icon: 'house', scene: 'Episode9', ending: true },
 ];
 
 const STORAGE_KEY = 'zetor.progress';
