@@ -22,6 +22,14 @@ const STRINGS = {
       'April 1955. Två män från Österbotten ska hämta en ny Zetor 25A i Helsingfors.\n\nMen tågen står still. Det är strejk!',
     'ep1.title': 'Mot Vasa',
     'ep1.intro': 'Våra hjältar klämmer in sig på en enda motorcykel och styr mot Vasa.',
+    'ep1.howto': 'Styr undan för gropar, pölar och kor!',
+    'ep1.km': 'Vasa {km} km',
+    'ep1.smoke': 'Bakdäcket ryker!',
+    'ep1.bang': 'PANG! Däcket är slut.',
+    'end.done': 'Avsnittet klart!',
+    'end.bumps': 'Smällar: {n}',
+    'end.next': 'FORTSÄTT',
+    'end.again': 'SPELA IGEN',
     'ep2.title': 'Lift till flygfältet',
     'ep2.intro': 'Motorcykeln gav upp. Nu gäller det att få lift till Vasa flygfält.',
     'ep3.title': 'Flyget söderut',
@@ -74,6 +82,14 @@ const STRINGS = {
       'April 1955. Two men from Ostrobothnia must fetch a new Zetor 25A from Helsinki.\n\nBut the trains have stopped. There is a strike!',
     'ep1.title': 'To Vaasa',
     'ep1.intro': 'Our heroes squeeze onto a single motorcycle and head for Vaasa.',
+    'ep1.howto': 'Steer around potholes, puddles and cows!',
+    'ep1.km': 'Vaasa {km} km',
+    'ep1.smoke': 'The back tyre is smoking!',
+    'ep1.bang': 'BANG! The tyre is done for.',
+    'end.done': 'Episode complete!',
+    'end.bumps': 'Bumps: {n}',
+    'end.next': 'CONTINUE',
+    'end.again': 'PLAY AGAIN',
     'ep2.title': 'A lift to the airport',
     'ep2.intro': 'The motorcycle gave up. Time to catch a lift to Vaasa airport.',
     'ep3.title': 'Flying south',
@@ -141,8 +157,11 @@ export function nextLang() {
   setLang(LANGS[(LANGS.indexOf(current) + 1) % LANGS.length]);
 }
 
-export function t(key) {
-  return STRINGS[current][key] ?? STRINGS.en[key] ?? key;
+// Look up a string; `{name}` placeholders are filled from `vars`.
+export function t(key, vars) {
+  const str = STRINGS[current][key] ?? STRINGS.en[key] ?? key;
+  if (!vars || typeof str !== 'string') return str;
+  return str.replace(/\{(\w+)\}/g, (m, name) => (name in vars ? vars[name] : m));
 }
 
 document.documentElement.lang = current;

@@ -1,7 +1,7 @@
 // The story, in order. `scene` is the Phaser scene that plays the episode;
 // episodes without one yet fall back to the Placeholder scene.
 export const EPISODES = [
-  { id: 1, icon: 'moto' },
+  { id: 1, icon: 'moto', scene: 'Episode1' },
   { id: 2, icon: 'car' },
   { id: 3, icon: 'plane' },
   { id: 4, icon: 'taxi' },
