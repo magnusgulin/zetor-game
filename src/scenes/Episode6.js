@@ -5,8 +5,8 @@ import { endPanel } from '../flow.js';
 
 // Episode 6: driving the new Zetor home through the evening and night.
 // First pick up barrels and boxes by the road to build a seat for the
-// second hero. Later he falls asleep and loses a glove; a lorry driver
-// has seen it, so they turn around and pick it up.
+// second hero. Later he falls asleep and loses a glove; a lorry coming up
+// from behind has driven past it, so they turn around and pick it up.
 
 const ROAD_Y = 250;
 const TX = 96; // the tractor stays here; the world scrolls past
@@ -187,9 +187,11 @@ export class Episode6 extends Phaser.Scene {
     this.time.delayedCall(9500, () => this.lorryArrives());
   }
 
+  // The lorry comes up from behind, the same way the glove fell, so the
+  // driver has seen it. It overtakes and stops just ahead.
   lorryArrives() {
     this.state = 'truck';
-    this.lorry = this.add.image(WIDTH + 70, ROAD_Y - 8, 'lorry').setScale(2).setFlipX(true).setDepth(45);
+    this.lorry = this.add.image(-70, ROAD_Y - 8, 'lorry').setScale(2).setDepth(44);
     this.tweens.add({ targets: this, speed: 0, duration: 1500 });
     this.tweens.add({
       targets: this.lorry,
@@ -206,7 +208,7 @@ export class Episode6 extends Phaser.Scene {
     this.bubble(this.lorry, t('ep6.driver'), 2600, 140);
     this.time.delayedCall(2800, () => {
       this.bubble(this.rider, t('ep6.back'), 1800);
-      this.tweens.add({ targets: this.lorry, x: -80, duration: 2600, ease: 'Quad.easeIn', onComplete: () => this.lorry.destroy() });
+      this.tweens.add({ targets: this.lorry, x: WIDTH + 80, duration: 2600, ease: 'Quad.easeIn', onComplete: () => this.lorry.destroy() });
     });
     this.time.delayedCall(4400, () => this.turnAround(-1));
   }
