@@ -13,6 +13,7 @@ const HERO_X = 150;
 const CAR_SPEED = 50;
 const ZONE = 50; // how close a car must be for a wave to count
 const CAR_Y = ROAD_Y - 18;
+const FULL_FIRST = 3; // full cars that pass before the first one with room
 
 export class Episode2 extends Phaser.Scene {
   constructor() {
@@ -24,6 +25,7 @@ export class Episode2 extends Phaser.Scene {
     this.state = 'wait';
     this.car = null;
     this.carsSinceFree = 0;
+    this.carsSeen = 0;
 
     landscape(this, { roadY: ROAD_Y });
 
@@ -58,8 +60,10 @@ export class Episode2 extends Phaser.Scene {
 
   spawnCar() {
     if (this.state !== 'wait') return;
-    // Every few cars one is sure to have room, so nobody waits forever.
-    const free = this.carsSinceFree >= 3 || Math.random() < 0.4;
+    // The first cars are always full, so the player learns what a full car
+    // looks like. After that every few cars one is sure to have room.
+    const free = this.carsSeen >= FULL_FIRST && (this.carsSinceFree >= 3 || Math.random() < 0.4);
+    this.carsSeen++;
     this.carsSinceFree = free ? 0 : this.carsSinceFree + 1;
     const color = Phaser.Utils.Array.GetRandom(CAR_COLORS);
     this.car = this.add.image(-70, CAR_Y, `car_${color}_${free ? 'free' : 'full'}`).setScale(3);
