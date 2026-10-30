@@ -62,16 +62,18 @@ export function landscape(scene, opts = {}) {
   return { g, roadY };
 }
 
-// Simple controls shared by all episodes: hold left/right, tap action.
-// On a phone these are big on-screen buttons; on desktop the arrow keys
-// and space bar do the same.
+// Simple controls shared by all episodes: hold left/right (or up/down with
+// `vertical`), tap action. On a phone these are big on-screen buttons; on
+// desktop the arrow keys and space bar do the same.
 export class Controls {
   constructor(scene, opts = {}) {
-    const { action = true, y = HEIGHT - 34 } = opts;
+    const { action = true, vertical = false, y = HEIGHT - 34 } = opts;
     this.left = false;
     this.right = false;
+    this.up = false;
+    this.down = false;
     this.actionPressed = false;
-    this.keys = scene.input.keyboard?.addKeys('LEFT,RIGHT,SPACE,UP');
+    this.keys = scene.input.keyboard?.addKeys('LEFT,RIGHT,SPACE,UP,DOWN');
 
     const pad = (x, w, icon, onDown, onUp) => {
       const r = scene.add.rectangle(x, y, w, 52, 0x000000, 0.35).setStrokeStyle(2, 0xfcfcfc, 0.6);
@@ -85,8 +87,13 @@ export class Controls {
       return r;
     };
 
-    pad(36, 64, 'arrowL', () => (this.left = true), () => (this.left = false));
-    pad(106, 64, 'arrowR', () => (this.right = true), () => (this.right = false));
+    if (vertical) {
+      pad(36, 64, 'arrowU', () => (this.up = true), () => (this.up = false));
+      pad(106, 64, 'arrowD', () => (this.down = true), () => (this.down = false));
+    } else {
+      pad(36, 64, 'arrowL', () => (this.left = true), () => (this.left = false));
+      pad(106, 64, 'arrowR', () => (this.right = true), () => (this.right = false));
+    }
     if (action) {
       pad(198, 76, 'actionBtn', () => (this.actionPressed = true));
     }
@@ -98,6 +105,14 @@ export class Controls {
 
   get rightDown() {
     return this.right || this.keys?.RIGHT.isDown;
+  }
+
+  get upDown() {
+    return this.up || this.keys?.UP.isDown;
+  }
+
+  get downDown() {
+    return this.down || this.keys?.DOWN.isDown;
   }
 
   // True once per tap.

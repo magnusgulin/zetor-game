@@ -301,6 +301,54 @@ const ART = {
     '..nn.nn..',
     '.nn...nn.',
   ],
+  arrowU: [
+    '...w...',
+    '..www..',
+    '.wwwww.',
+    'wwwwwww',
+  ],
+  arrowD: [
+    'wwwwwww',
+    '.wwwww.',
+    '..www..',
+    '...w...',
+  ],
+  cloud: [
+    '........wwww............',
+    '......wwwwwwww..www.....',
+    '....wwwwwwwwwwwwwwwww...',
+    '..wwwwwwwwwwwwwwwwwwwww.',
+    '.wwwwwwwwwwwwwwwwwwwwwww',
+    'wwwwwwwwwwwwwwwwwwwwwwww',
+    '.NNNNwwwwwwwwwwwwwwNNNN.',
+    '...NNNNNNNNNNNNNNNNNN...',
+  ],
+  storm: [
+    '.......nnnnn............',
+    '.....nnnnnnnnn..nnn.....',
+    '...nnnnnnnnnnnnnnnnnn...',
+    '..nnnnnnnnnnnnnnnnnnnnn.',
+    '.nnnnnnnnnnnnnnnnnnnnnnn',
+    'nnnnnnnnnnnnnnnnnnnnnnnn',
+    'nkkkknnnnnnnnnnnnnkkkkkn',
+    '.kkkkkkkkkkkkkkkkkkkkkk.',
+    '......yy.......yy.......',
+    '.....yy.......yy........',
+    '......yy.......yy.......',
+    '.......y........y.......',
+  ],
+  gull: [
+    'ww.....ww',
+    '.ww...ww.',
+    '..wwkww..',
+    '....k....',
+  ],
+  gull2: [
+    '.........',
+    '..wwkww..',
+    '.ww.k.ww.',
+    'ww.....ww',
+  ],
   arrowL: [
     '...w',
     '..ww',
@@ -462,11 +510,44 @@ function carSide(draw, body, heads) {
   }
 }
 
+// A silver twin-engine airliner of the 1950s, side view facing right, with
+// a blue window stripe. Two frames spin the propeller.
+function airliner(px, frame) {
+  const rect = (x0, y0, w, h, ch) => {
+    for (let y = y0; y < y0 + h; y++) for (let x = x0; x < x0 + w; x++) px(x, y, ch);
+  };
+  // Tail fin and tailplane.
+  rect(2, 1, 3, 6, 'N');
+  rect(3, 0, 2, 1, 'N');
+  rect(5, 3, 2, 4, 'N');
+  rect(1, 7, 9, 1, 'n');
+  // Fuselage, tapering to the tail.
+  rect(5, 6, 6, 3, 'N');
+  rect(8, 5, 34, 6, 'N');
+  rect(42, 6, 3, 5, 'N');
+  rect(45, 7, 2, 3, 'N');
+  rect(8, 5, 34, 1, 'w');
+  rect(8, 10, 34, 1, 'n');
+  // Blue stripe and windows.
+  rect(6, 8, 39, 1, 'b');
+  for (let x = 14; x <= 36; x += 3) px(x, 7, 'B');
+  rect(41, 6, 3, 1, 'B');
+  // Wing, engine and propeller.
+  rect(18, 10, 16, 2, 'n');
+  rect(31, 8, 7, 4, 'N');
+  rect(31, 11, 7, 1, 'n');
+  if (frame === 0) rect(39, 5, 1, 10, 'k');
+  else rect(39, 8, 1, 4, 'k');
+}
+
 export const CAR_COLORS = ['B', 'k', 'R', 'n', 'x'];
 
 export function createSprites(scene) {
   for (const [key, rows] of Object.entries(ART)) fromAscii(scene, key, rows);
   for (const f of [0, 1]) fromDraw(scene, `zetor_${f}`, 36, 26, (px) => zetor(px, f));
+  for (const f of [0, 1]) fromDraw(scene, `plane_${f}`, 48, 15, (px) => airliner(px, f));
+  scene.anims.create({ key: 'plane-fly', frames: [{ key: 'plane_0' }, { key: 'plane_1' }], frameRate: 12, repeat: -1 });
+  scene.anims.create({ key: 'gull-flap', frames: [{ key: 'gull' }, { key: 'gull2' }], frameRate: 4, repeat: -1 });
   for (const c of CAR_COLORS) {
     fromDraw(scene, `car_${c}_free`, 41, 21, (px) => carSide(px, c, 1));
     fromDraw(scene, `car_${c}_full`, 41, 21, (px) => carSide(px, c, 4));
