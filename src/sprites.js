@@ -212,7 +212,7 @@ function fromDraw(scene, key, w, h, draw) {
 }
 
 // A tractor wheel: black tyre with tread lugs that shift each frame so the
-// wheel appears to roll, a red rim and a dark hub.
+// wheel appears to roll, a yellow rim and a darker hub.
 function wheel(px, cx, cy, r, frame) {
   for (let y = -r; y <= r; y++) {
     for (let x = -r; x <= r; x++) {
@@ -220,19 +220,20 @@ function wheel(px, cx, cy, r, frame) {
       if (d > r) continue;
       if (d > r - 1) {
         const a = Math.atan2(y, x) + frame * 0.4;
-        px(cx + x, cy + y, Math.floor((a / Math.PI) * 4 + 8) % 2 ? 'k' : 'O');
-      } else if (d > r * 0.55) {
+        px(cx + x, cy + y, Math.floor((a / Math.PI) * 4 + 8) % 2 ? 'k' : 'n');
+      } else if (d > r * 0.6) {
         px(cx + x, cy + y, 'k');
       } else if (d > r * 0.25) {
-        px(cx + x, cy + y, 'r');
+        px(cx + x, cy + y, 'y');
       } else {
-        px(cx + x, cy + y, 'n');
+        px(cx + x, cy + y, 'q');
       }
     }
   }
 }
 
-// The Zetor 25A seen from the side, facing right. Two frames for driving.
+// The Zetor 25A seen from the side, facing right: pale green with yellow
+// rims and the upright exhaust of the 25A. Two frames for driving.
 function zetor(px, frame) {
   const rect = (x0, y0, w, h, ch) => {
     for (let y = y0; y < y0 + h; y++) for (let x = x0; x < x0 + w; x++) px(x, y, ch);
@@ -242,7 +243,7 @@ function zetor(px, frame) {
   for (let y = -11; y <= 0; y++) {
     for (let x = -11; x <= 11; x++) {
       const d = Math.hypot(x + 0.5, y + 0.5);
-      if (d > 8.6 && d <= 10.6) px(rear.x + x, rear.y + y, d > 9.8 ? 'R' : 'r');
+      if (d > 8.6 && d <= 10.6) px(rear.x + x, rear.y + y, d > 9.8 ? 'x' : 'Z');
     }
   }
   // Seat with a backrest on top of the mudguard.
@@ -252,18 +253,22 @@ function zetor(px, frame) {
   rect(14, 5, 1, 5, 'k');
   rect(11, 4, 6, 1, 'k');
   // Engine block under the hood.
-  rect(17, 16, 13, 3, 'n');
-  rect(17, 18, 13, 1, 'O');
-  // Hood with rounded front and a dark stripe.
-  rect(15, 10, 18, 6, 'r');
-  rect(16, 9, 16, 1, 'r');
-  rect(16, 9, 16, 1, 'R');
-  rect(15, 15, 18, 1, 'R');
-  rect(33, 11, 1, 4, 'r');
-  // Grille and badge.
-  rect(34, 11, 1, 5, 'N');
-  rect(29, 12, 2, 1, 'w');
-  // Exhaust pipe.
+  rect(17, 16, 13, 3, 'x');
+  rect(17, 18, 13, 1, 'k');
+  // Hood: rounded top with a highlight, darker lower edge.
+  rect(15, 10, 18, 6, 'Z');
+  rect(16, 9, 16, 1, 'Z');
+  rect(16, 10, 16, 1, 'z');
+  rect(15, 15, 18, 1, 'x');
+  rect(33, 10, 1, 6, 'Z');
+  // Radiator grille at the front with vertical slats.
+  rect(34, 10, 1, 6, 'x');
+  for (let y = 11; y < 15; y += 2) px(34, y, 'k');
+  // Headlight on the side of the hood and the ZETOR badge.
+  rect(31, 8, 2, 2, 'Y');
+  px(31, 8, 'w');
+  rect(22, 12, 6, 1, 'w');
+  // Upright exhaust pipe.
   rect(27, 2 + frame, 2, 8 - frame, 'k');
   wheel(px, rear.x, rear.y, 8, frame);
   wheel(px, 29, 21, 4, frame);

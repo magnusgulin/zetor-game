@@ -14,8 +14,8 @@ export class Title extends Phaser.Scene {
     this.add.circle(206, 26, 12, Phaser.Display.Color.HexStringToColor(PAL.y).color);
 
     // Logo.
-    text(this, WIDTH / 2, 62, 'ZETOR', { size: 32, color: PAL.r, font: LOGO_FONT }).setShadow(3, 3, PAL.k, 0, false, true);
-    text(this, WIDTH / 2, 100, '25A', { size: 24, color: PAL.w, font: LOGO_FONT }).setShadow(3, 3, PAL.k, 0, false, true);
+    text(this, WIDTH / 2, 62, 'ZETOR', { size: 32, color: PAL.z, font: LOGO_FONT }).setShadow(3, 3, PAL.k, 0, false, true);
+    text(this, WIDTH / 2, 100, '25A', { size: 24, color: PAL.y, font: LOGO_FONT }).setShadow(3, 3, PAL.k, 0, false, true);
     text(this, WIDTH / 2, 134, t('title.sub'), { color: PAL.y });
     text(this, WIDTH / 2, 154, t('title.year'), {});
 

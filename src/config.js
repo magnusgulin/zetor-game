@@ -29,4 +29,9 @@ export const PAL = {
   c: '#3cbcfc',
   t: '#a4e4fc',
   p: '#6844fc',
+  // Zetor 25A paint: pale green body, yellow wheel rims.
+  z: '#b8e0a0',
+  Z: '#80b878',
+  x: '#4a7c48',
+  q: '#c88c00',
 };
