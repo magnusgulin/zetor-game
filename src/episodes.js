@@ -28,8 +28,31 @@ const done = load();
 // Add ?all to the URL to unlock every episode while testing.
 const unlockAll = new URLSearchParams(location.search).has('all');
 
+// The cheat (tap 25A on the title screen five times) opens every episode
+// and adds a skip button to each one.
+const CHEAT_KEY = 'zetor.cheat';
+let cheat = false;
+try {
+  cheat = localStorage.getItem(CHEAT_KEY) === '1';
+} catch (e) {
+  // No storage: the cheat lasts for this visit only.
+}
+
+export function cheatOn() {
+  return cheat;
+}
+
+export function setCheat(on) {
+  cheat = on;
+  try {
+    localStorage.setItem(CHEAT_KEY, on ? '1' : '0');
+  } catch (e) {
+    // Kept for this visit only.
+  }
+}
+
 export function isUnlocked(id) {
-  return unlockAll || id === 1 || done.has(id - 1);
+  return unlockAll || cheat || id === 1 || done.has(id - 1);
 }
 
 export function isDone(id) {
