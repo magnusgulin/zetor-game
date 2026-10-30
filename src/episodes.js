@@ -2,7 +2,7 @@
 // episodes without one yet fall back to the Placeholder scene.
 export const EPISODES = [
   { id: 1, icon: 'moto', scene: 'Episode1' },
-  { id: 2, icon: 'car' },
+  { id: 2, icon: 'car', scene: 'Episode2' },
   { id: 3, icon: 'plane' },
   { id: 4, icon: 'taxi' },
   { id: 5, icon: 'paper', cutscene: true },

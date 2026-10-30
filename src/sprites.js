@@ -411,9 +411,66 @@ function zetor(px, frame) {
   wheel(px, 29, 21, 4, frame);
 }
 
+// A 1950s car seen from the side, facing right. `heads` is how many people
+// are already inside: a full car has no room for our heroes.
+const CAR_SEATS = [
+  [24, 4], [27, 4],
+  [14, 4], [17, 4],
+];
+
+function carSide(draw, body, heads) {
+  // Leave three rows at the top for luggage on the roof.
+  const px = (x, y, ch) => draw(x, y + 3, ch);
+  const rect = (x0, y0, w, h, ch) => {
+    for (let y = y0; y < y0 + h; y++) for (let x = x0; x < x0 + w; x++) px(x, y, ch);
+  };
+  // Rounded roof and body.
+  rect(12, 1, 16, 1, body);
+  rect(10, 2, 20, 6, body);
+  rect(3, 7, 35, 7, body);
+  rect(2, 9, 37, 4, body);
+  // A full car has suitcases strapped to the roof, easy to spot from afar.
+  if (heads >= CAR_SEATS.length) {
+    rect(12, -2, 7, 3, 'o');
+    rect(20, -3, 8, 4, 'O');
+    rect(15, -2, 1, 3, 'k');
+    rect(23, -3, 1, 4, 'k');
+  }
+  // Windows.
+  rect(12, 3, 7, 4, 't');
+  rect(21, 3, 7, 4, 't');
+  // People inside: hair and a face.
+  CAR_SEATS.slice(0, heads).forEach(([x, y]) => {
+    rect(x, y, 2, 1, 'O');
+    rect(x, y + 1, 2, 2, 's');
+  });
+  // Chrome strip, bumpers, lights and door line.
+  rect(4, 10, 33, 1, 'N');
+  rect(1, 11, 3, 2, 'N');
+  rect(37, 11, 3, 2, 'N');
+  px(38, 9, 'y');
+  px(2, 9, 'r');
+  rect(20, 7, 1, 6, 'k');
+  // Wheels.
+  for (const cx of [10, 30]) {
+    for (let y = -3; y <= 3; y++) {
+      for (let x = -3; x <= 3; x++) {
+        const d = Math.hypot(x, y);
+        if (d <= 3.4) px(cx + x, 14 + y, d < 1.5 ? 'N' : 'k');
+      }
+    }
+  }
+}
+
+export const CAR_COLORS = ['B', 'k', 'R', 'n', 'x'];
+
 export function createSprites(scene) {
   for (const [key, rows] of Object.entries(ART)) fromAscii(scene, key, rows);
   for (const f of [0, 1]) fromDraw(scene, `zetor_${f}`, 36, 26, (px) => zetor(px, f));
+  for (const c of CAR_COLORS) {
+    fromDraw(scene, `car_${c}_free`, 41, 21, (px) => carSide(px, c, 1));
+    fromDraw(scene, `car_${c}_full`, 41, 21, (px) => carSide(px, c, 4));
+  }
 
   scene.anims.create({
     key: 'zetor-drive',
