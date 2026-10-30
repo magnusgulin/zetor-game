@@ -1,6 +1,7 @@
 import { WIDTH, HEIGHT, PAL, LOGO_FONT } from '../config.js';
 import { t, nextLang } from '../i18n.js';
 import { text, button, landscape } from '../ui.js';
+import { cheatOn, setCheat } from '../episodes.js';
 
 export class Title extends Phaser.Scene {
   constructor() {
@@ -15,7 +16,20 @@ export class Title extends Phaser.Scene {
 
     // Logo.
     text(this, WIDTH / 2, 62, 'ZETOR', { size: 32, color: PAL.z, font: LOGO_FONT }).setShadow(3, 3, PAL.k, 0, false, true);
-    text(this, WIDTH / 2, 100, '25A', { size: 24, color: PAL.y, font: LOGO_FONT }).setShadow(3, 3, PAL.k, 0, false, true);
+    const logo = text(this, WIDTH / 2, 100, '25A', { size: 24, color: PAL.y, font: LOGO_FONT }).setShadow(3, 3, PAL.k, 0, false, true);
+
+    // Secret: tap 25A five times to turn the cheat on or off.
+    let taps = 0;
+    logo.setInteractive().on('pointerdown', () => {
+      taps++;
+      this.tweens.add({ targets: logo, scale: 1.15, duration: 60, yoyo: true });
+      if (taps < 5) return;
+      taps = 0;
+      setCheat(!cheatOn());
+      const note = text(this, WIDTH / 2, 248, t(cheatOn() ? 'title.cheatOn' : 'title.cheatOff'), { color: PAL.y }).setDepth(20);
+      note.setBackgroundColor('rgba(0,0,0,0.6)').setPadding(4, 2);
+      this.tweens.add({ targets: note, alpha: 0, delay: 1800, duration: 400, onComplete: () => note.destroy() });
+    });
     text(this, WIDTH / 2, 134, t('title.sub'), { color: PAL.y });
     text(this, WIDTH / 2, 154, t('title.year'), {});
 
