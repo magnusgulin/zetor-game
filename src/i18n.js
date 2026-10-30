@@ -53,7 +53,7 @@ const STRINGS = {
     'ep4.title': 'Taxi till Hankkija',
     'ep4.intro': 'Från flygfältet tar de taxi till Hankkijas butik.',
     'ep5.title': 'Pappersarbete',
-    'ep5.intro': 'Personalen är redan på väg hem... men vänder om och gör klart pappren.',
+    'ep5.intro': 'Personalen är redan på väg hem... men vänder om och gör klart pappersarbetet.',
     'ep6.title': 'Zetorn kör hemåt',
     'ep6.intro': 'Nu bär det av hemåt på den nya Zetorn! Den ena kör. Den andra behöver något att sitta på.',
     'ep7.title': 'Frukost i Björneborg',
