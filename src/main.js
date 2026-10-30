@@ -8,6 +8,7 @@ import { Credits } from './scenes/Credits.js';
 import { Episode1 } from './scenes/Episode1.js';
 import { Episode2 } from './scenes/Episode2.js';
 import { Episode3 } from './scenes/Episode3.js';
+import { Episode4 } from './scenes/Episode4.js';
 
 async function start() {
   // Phaser draws text to canvas, so the pixel font must be ready first.
@@ -30,7 +31,7 @@ async function start() {
       autoCenter: Phaser.Scale.CENTER_BOTH,
     },
     input: { activePointers: 3 },
-    scene: [Boot, Title, Select, Intro, Placeholder, Credits, Episode1, Episode2, Episode3],
+    scene: [Boot, Title, Select, Intro, Placeholder, Credits, Episode1, Episode2, Episode3, Episode4],
   });
 }
 
