@@ -334,6 +334,36 @@ const ART = {
     '.kkkkkkkk.',
     '.RRRRRRRR.',
   ],
+  barrel: [
+    '.oooooo.',
+    'oOOOOOOo',
+    'kkkkkkkk',
+    'oooooooo',
+    'oOoooooo',
+    'oOoooooo',
+    'oooooooo',
+    'kkkkkkkk',
+    'oOOOOOOo',
+    '.oooooo.',
+  ],
+  box: [
+    'OOOOOOOOOO',
+    'OYYYYYYYYO',
+    'OYoYYYYoYO',
+    'OOOOOOOOOO',
+    'OYYYYYYYYO',
+    'OYoYYYYoYO',
+    'OYYYYYYYYO',
+    'OOOOOOOOOO',
+  ],
+  glove: [
+    '.O.O.O.',
+    '.O.O.OO',
+    'OOOOOOO',
+    'OoooooO',
+    '.OoooO.',
+    '.OOOOO.',
+  ],
   taxiTop: [
     '..kkkkkk..',
     '.kyyyyyyk.',
@@ -588,6 +618,36 @@ function airliner(px, frame) {
   else rect(39, 8, 1, 4, 'k');
 }
 
+// A 1950s lorry with a red cab and a load of milk churns, facing right.
+function lorry(px) {
+  const rect = (x0, y0, w, h, ch) => {
+    for (let y = y0; y < y0 + h; y++) for (let x = x0; x < x0 + w; x++) px(x, y, ch);
+  };
+  // Load of churns on the flatbed.
+  for (let x = 3; x < 30; x += 6) {
+    rect(x, 4, 4, 8, 'N');
+    rect(x, 4, 4, 1, 'w');
+    rect(x + 1, 3, 2, 1, 'n');
+  }
+  rect(1, 12, 33, 3, 'o');
+  rect(1, 15, 46, 2, 'k');
+  // Cab with a rounded bonnet.
+  rect(34, 2, 10, 13, 'r');
+  rect(36, 4, 6, 5, 't');
+  rect(44, 7, 6, 8, 'r');
+  rect(34, 2, 10, 1, 'R');
+  rect(49, 9, 1, 6, 'N');
+  px(49, 8, 'y');
+  for (const cx of [8, 40]) {
+    for (let y = -4; y <= 4; y++) {
+      for (let x = -4; x <= 4; x++) {
+        const d = Math.hypot(x, y);
+        if (d <= 4.4) px(cx + x, 18 + y, d < 1.8 ? 'N' : 'k');
+      }
+    }
+  }
+}
+
 export const CAR_COLORS = ['B', 'k', 'R', 'n', 'x'];
 
 export function createSprites(scene) {
@@ -596,6 +656,7 @@ export function createSprites(scene) {
   for (const f of [0, 1]) fromDraw(scene, `plane_${f}`, 48, 15, (px) => airliner(px, f));
   scene.anims.create({ key: 'plane-fly', frames: [{ key: 'plane_0' }, { key: 'plane_1' }], frameRate: 12, repeat: -1 });
   scene.anims.create({ key: 'gull-flap', frames: [{ key: 'gull' }, { key: 'gull2' }], frameRate: 4, repeat: -1 });
+  fromDraw(scene, 'lorry', 51, 23, lorry);
   for (const c of CAR_COLORS) {
     fromDraw(scene, `car_${c}_free`, 41, 21, (px) => carSide(px, c, 1));
     fromDraw(scene, `car_${c}_full`, 41, 21, (px) => carSide(px, c, 4));

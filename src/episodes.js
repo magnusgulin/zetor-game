@@ -6,7 +6,7 @@ export const EPISODES = [
   { id: 3, icon: 'plane', scene: 'Episode3' },
   { id: 4, icon: 'taxi', scene: 'Episode4' },
   { id: 5, icon: 'paper', scene: 'Episode5' },
-  { id: 6, icon: 'zetor_0' },
+  { id: 6, icon: 'zetor_0', scene: 'Episode6' },
   { id: 7, icon: 'sausage' },
   { id: 8, icon: 'coffee' },
   { id: 9, icon: 'house', ending: true },

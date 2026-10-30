@@ -137,7 +137,7 @@ export class Episode4 extends Phaser.Scene {
     if (this.busy) return;
     this.busy = true;
     this.setPads(false);
-    this.banner.setText('');
+    this.banner.setText('').setVisible(false);
     const right = dir === this.route[this.crossing];
     if (!right) this.bumps++;
 
@@ -155,8 +155,8 @@ export class Episode4 extends Phaser.Scene {
         this.cameras.main.fadeOut(250);
         this.cameras.main.once('camerafadeoutcomplete', () => {
           if (!right) {
-            this.banner.setText(t('ep4.wrong')).setColor(PAL.y);
-            this.time.delayedCall(1200, () => this.banner.setText(''));
+            this.banner.setVisible(true).setText(t('ep4.wrong')).setColor(PAL.y);
+            this.time.delayedCall(1200, () => this.banner.setText('').setVisible(false));
           }
           if (this.crossing >= CROSSINGS) this.arrive();
           else this.showCrossing();
@@ -195,7 +195,7 @@ export class Episode4 extends Phaser.Scene {
       duration: 1600,
       ease: 'Quad.easeOut',
       onComplete: () => {
-        this.banner.setText(t('ep4.arrive')).setColor(PAL.y).setY(260);
+        this.banner.setVisible(true).setText(t('ep4.arrive')).setColor(PAL.y).setY(260);
         this.world.add(this.add.image(LANE_UP + 30, 206, 'old').setScale(2));
         this.world.add(this.add.image(LANE_UP + 48, 206, 'young').setScale(2));
         this.time.delayedCall(2000, () => endPanel(this, 4, { bumps: this.bumps }));
