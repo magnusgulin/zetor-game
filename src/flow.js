@@ -1,7 +1,7 @@
 import { WIDTH, HEIGHT, PAL } from './config.js';
 import { t } from './i18n.js';
 import { text, button } from './ui.js';
-import { getEpisode, markDone } from './episodes.js';
+import { getEpisode, markDone, cheatOn } from './episodes.js';
 
 // Mark an episode done and move on to the next part of the story.
 export function nextEpisode(scene, id) {
@@ -39,4 +39,10 @@ export function endPanel(scene, id, { bumps } = {}) {
   button(scene, WIDTH / 2, 218, t('end.next'), () => nextEpisode(scene, id), { width: 150, height: 28 }).setDepth(depth);
   button(scene, WIDTH / 2, 252, t('end.again'), () => scene.scene.restart(), { width: 150, height: 24, fill: PAL.B, edge: PAL.b }).setDepth(depth);
   return box;
+}
+
+// With the cheat on, every episode gets a skip button in the top corner.
+export function addSkip(scene, id) {
+  if (!cheatOn()) return;
+  button(scene, WIDTH - 22, 13, '>>', () => nextEpisode(scene, id), { width: 32, height: 20, fill: PAL.r, edge: PAL.R }).setDepth(210);
 }

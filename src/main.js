@@ -5,6 +5,7 @@ import { Select } from './scenes/Select.js';
 import { Intro } from './scenes/Intro.js';
 import { Placeholder } from './scenes/Placeholder.js';
 import { Credits } from './scenes/Credits.js';
+import { addSkip } from './flow.js';
 import { Episode1 } from './scenes/Episode1.js';
 
 async function start() {
@@ -29,6 +30,14 @@ async function start() {
     },
     input: { activePointers: 3 },
     scene: [Boot, Title, Select, Intro, Placeholder, Credits, Episode1],
+  });
+
+  // Give every episode scene the cheat's skip button once it is built.
+  window.game.events.once('ready', () => {
+    for (const scene of window.game.scene.scenes) {
+      const m = scene.sys.settings.key.match(/^Episode(\d+)$/);
+      if (m) scene.sys.events.on('create', () => addSkip(scene, Number(m[1])));
+    }
   });
 }
 

@@ -220,25 +220,6 @@ const ART = {
     '....SS....',
     '....S.....',
   ],
-  cart: [
-    '....OO....',
-    '...OooO...',
-    '...oooo...',
-    '..oooooo..',
-    '..oooooo..',
-    '..oooooo..',
-    '..oOooOo..',
-    '...o..o...',
-    '...O..O...',
-    '...O..O...',
-    'kOOOOOOOOk',
-    'kOYYYYYYOk',
-    'kOYyYYyYOk',
-    '.OYYYYYYO.',
-    'kOYYyYYYOk',
-    'kOYYYYyYOk',
-    '.OOOOOOOO.',
-  ],
   spruce: [
     '.....G.....',
     '....GGG....',
@@ -411,8 +392,33 @@ function zetor(px, frame) {
   wheel(px, 29, 21, 4, frame);
 }
 
+// A 1950s car seen from above, front up. X is the body colour.
+const CAR_TOP = [
+  '..XXXXXXXX..',
+  '.XXyXXXXyXX.',
+  '.XXXXXXXXXX.',
+  'kXXXXXXXXXXk',
+  'kXXXXXXXXXXk',
+  '.XXXXXXXXXX.',
+  '.XttttttttX.',
+  '.XttttttttX.',
+  '.XXXXXXXXXX.',
+  '.XXXXXXXXXX.',
+  '.XXXXXXXXXX.',
+  '.XXXXXXXXXX.',
+  '.XttttttttX.',
+  '.XXXXXXXXXX.',
+  'kXXXXXXXXXXk',
+  'kXXXXXXXXXXk',
+  '.XXXXXXXXXX.',
+  '.XrXXXXXXrX.',
+  '..XXXXXXXX..',
+];
+export const CAR_TOP_COLORS = ['b', 'R', 'k', 'N'];
+
 export function createSprites(scene) {
   for (const [key, rows] of Object.entries(ART)) fromAscii(scene, key, rows);
+  for (const c of CAR_TOP_COLORS) fromAscii(scene, `carTop_${c}`, CAR_TOP.map((r) => r.replaceAll('X', c)));
   for (const f of [0, 1]) fromDraw(scene, `zetor_${f}`, 36, 26, (px) => zetor(px, f));
 
   scene.anims.create({

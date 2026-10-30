@@ -2,9 +2,10 @@ import { WIDTH, HEIGHT, PAL } from '../config.js';
 import { t } from '../i18n.js';
 import { text, button, Controls } from '../ui.js';
 import { endPanel } from '../flow.js';
+import { CAR_TOP_COLORS } from '../sprites.js';
 
 // Episode 1: both heroes on one motorcycle, heading for Vaasa on a gravel
-// road. Steer around potholes, puddles, cows and a horse cart. Near Vaasa
+// road. Steer around potholes, puddles, cows and other cars. Near Vaasa
 // the back tyre starts smoking and finally gives up.
 
 const ROAD_L = 64;
@@ -90,9 +91,10 @@ export class Episode1 extends Phaser.Scene {
   }
 
   spawnObstacle() {
-    const type = Phaser.Utils.Array.GetRandom(['pothole', 'pothole', 'puddle', 'puddle', 'cow', 'cart']);
+    const type = Phaser.Utils.Array.GetRandom(['pothole', 'pothole', 'puddle', 'puddle', 'cow', 'car', 'car']);
     const x = Phaser.Math.Between(ROAD_L + 14, ROAD_R - 14);
-    const o = this.add.image(x, -30, type).setScale(2).setDepth(5);
+    const key = type === 'car' ? `carTop_${Phaser.Utils.Array.GetRandom(CAR_TOP_COLORS)}` : type;
+    const o = this.add.image(x, -30, key).setScale(2).setDepth(5);
     o.kind = type;
     o.vx = 0;
     o.vyFactor = 1;
@@ -102,9 +104,13 @@ export class Episode1 extends Phaser.Scene {
       o.vx = o.x < WIDTH / 2 ? 14 : -14;
       o.setAngle(o.vx > 0 ? 90 : -90);
     }
-    if (type === 'cart') {
-      // A horse cart going the same way, slower than us.
-      o.vyFactor = 0.45;
+    if (type === 'car') {
+      // Traffic keeps to the right: cars we catch up with in the right lane,
+      // oncoming cars in the left lane. Both drive calmly.
+      const oncoming = Math.random() < 0.5;
+      o.x = oncoming ? ROAD_L + 26 : ROAD_R - 26;
+      o.vyFactor = oncoming ? 1.5 : 0.45;
+      o.setAngle(oncoming ? 180 : 0);
     }
     this.obstacles.push(o);
   }
