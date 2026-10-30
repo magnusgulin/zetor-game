@@ -195,7 +195,7 @@ export class Episode6 extends Phaser.Scene {
     this.tweens.add({ targets: this, speed: 0, duration: 1500 });
     this.tweens.add({
       targets: this.lorry,
-      x: TX + 100,
+      x: TX + 88,
       duration: 2200,
       ease: 'Quad.easeOut',
       onComplete: () => this.askBtn.setVisible(true),
