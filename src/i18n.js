@@ -114,10 +114,10 @@ function detect() {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (LANGS.includes(saved)) return saved;
   } catch (e) {
-    // Storage unavailable; fall through to the browser language.
+    // Storage unavailable; start in Swedish.
   }
-  const nav = (navigator.language || '').toLowerCase();
-  return nav.startsWith('en') ? 'en' : 'sv';
+  // Swedish is the default; English is one tap away on the title screen.
+  return 'sv';
 }
 
 let current = detect();
