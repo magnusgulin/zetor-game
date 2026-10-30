@@ -66,7 +66,7 @@ const STRINGS = {
     'ep7.found': 'Där är en butik!',
     'ep7.shop': 'Välj korv och bröd!',
     'ep7.wrong': 'Nej, korv och bröd!',
-    'ep7.pay': 'Det blir 120 mark, tack!',
+    'ep7.pay': 'Det blir 145 mark, tack!',
     'ep8.howto': 'Håll in HÄLL och släpp när kaffet når strecket!',
     'ep8.pour': 'HÄLL',
     'ep8.meter': 'Pigga',
@@ -173,7 +173,7 @@ const STRINGS = {
     'ep7.found': "There's a shop!",
     'ep7.shop': 'Pick the sausage and the bread!',
     'ep7.wrong': 'No, sausage and bread!',
-    'ep7.pay': "That's 120 marks, please!",
+    'ep7.pay': "That's 145 marks, please!",
     'ep8.howto': 'Hold POUR and let go when the coffee reaches the line!',
     'ep8.pour': 'POUR',
     'ep8.meter': 'Awake',
@@ -224,10 +224,10 @@ function detect() {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (LANGS.includes(saved)) return saved;
   } catch (e) {
-    // Storage unavailable; fall through to the browser language.
+    // Storage unavailable; start in Swedish.
   }
-  const nav = (navigator.language || '').toLowerCase();
-  return nav.startsWith('en') ? 'en' : 'sv';
+  // Swedish is the default; English is one tap away on the title screen.
+  return 'sv';
 }
 
 let current = detect();
