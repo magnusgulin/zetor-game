@@ -23,7 +23,7 @@ const STRINGS = {
     'prologue':
       'April 1955. Två män från Österbotten ska hämta en ny Zetor 25A i Helsingfors.\n\nMen tågen står still. Det är strejk!',
     'ep1.title': 'Mot Vasa',
-    'ep1.intro': 'Våra hjältar klämmer in sig på en enda motorcykel och styr mot Vasa.',
+    'ep1.intro': 'Våra hjältar sätter sig på motorcykeln och styr mot Vasa.',
     'ep1.howto': 'Styr undan för gropar, pölar och kor!',
     'ep1.km': 'Vasa {km} km',
     'ep1.smoke': 'Bakdäcket ryker!',
