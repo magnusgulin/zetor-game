@@ -1,5 +1,10 @@
 # Zetor 25A – The long road home
 
+> **Note:** This is a vibe-coded experiment: an attempt to see how far you can
+> get by describing a game in plain words and letting an AI (Claude) write the
+> code. I gave the story, ideas and feedback; the AI wrote nearly all of the
+> code and drew the pixel art in code.
+
 An 8-bit style browser game based on a true story. In April 1955 two men from
 Ostrobothnia travelled to Helsinki to fetch a new Zetor 25A tractor. The trains
 were on strike, so they got there by motorcycle, hitchhiking, plane and taxi,
